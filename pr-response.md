@@ -47,9 +47,11 @@ I used AI tools to help orient myself in the codebase, understand existing servi
 
 ## Comment 6 – Rebase
 
-**What conflicted:
-How I resolved it:
-How I verified no conflict remains:**
+**What conflicted: While rebasing `feature/watchlist` onto the updated `main`, `.gitignore` had an add/add conflict because both branches added the file. After the rebase, the updated `main` also changed film IDs from integers to UUID strings, which affected the watchlist code because it still needed a `WatchlistEntry` model compatible with UUID-based `Film.id` values.
+
+How I resolved it: I resolved the `.gitignore` conflict by keeping a combined ignore file that excludes environment files, database files, Python cache files, the virtual environment, and pytest cache. I then restored the `WatchlistEntry` model using UUID-compatible string IDs, added the `User` and `Film` relationships back to `models.py`, and updated the watchlist test/code references so the nonexistent film test uses a UUID-style `film_id`.
+
+How I verified no conflict remains: I ran `pytest tests/ -v` after resolving the rebase and UUID issue, and the full test suite passed. I also checked `git status` to confirm the working tree was clean after committing the fix.
 
 ## PR Description
 

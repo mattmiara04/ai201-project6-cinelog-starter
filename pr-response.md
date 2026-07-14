@@ -27,15 +27,23 @@ I used AI tools to help orient myself in the codebase, understand existing servi
 
 ## Comment 4 – Default visibility
 
-**My position:
-Reasoning:
-Tradeoff acknowledged:**
+**My position: I am keeping the default watchlist visibility as `public=True`.**
+
+
+**Reasoning: CineLog is designed as a community film tracking app, so a public default makes sense for a watchlist feature because it helps users share what they plan to watch and makes their profile more useful to other users. A watchlist is less sensitive than something like private notes or account settings; it is part of the social discovery value of the app. Keeping the default public also keeps behavior simple for callers because adding a film to a watchlist immediately makes it visible in the same way other community-facing film activity is visible.**
+
+
+**Tradeoff acknowledged: The tradeoff is that a private default would give users more control and avoid accidentally exposing what someone plans to watch. That is a valid privacy concern. However, for CineLog’s current community-focused context, I think the better default is public because it supports sharing and discovery. If privacy becomes a larger product requirement later, I would support adding an explicit `public` parameter so callers can choose visibility instead of relying only on the default.S**
 
 ## Comment 5 – Sort order
 
-**My position:
-Reasoning:
-Engagement with reviewer’s point:**
+**My position: I am keeping the watchlist sorted alphabetically by film title.**
+
+
+**Reasoning: For a watchlist, users are often looking for a specific movie they already saved, not just reviewing their most recent activity. Alphabetical order makes the list predictable and scannable as it grows, especially when a user has many saved films. This also matches the current implementation in `get\_watchlist()`, which joins films and orders by `Film.title.asc()`.**
+
+
+**Engagement with reviewer’s point: I understand the maintainer’s point that many users may want to see what they added recently, and sorting by `date\_added` would support that behavior better. However, I see that as more useful for an activity feed or “recently added” view than for the main watchlist. For the main watchlist endpoint, I think alphabetical order is the better default because it optimizes for finding saved films consistently. A future improvement could add an optional sort parameter, such as `sort=recent` or `sort=title`, but I would keep the default alphabetical for now.**
 
 ## Comment 6 – Rebase
 

@@ -55,3 +55,17 @@ How I verified no conflict remains: I ran `pytest tests/ -v` after resolving the
 
 ## PR Description
 
+This PR completes the CineLog watchlist feature review cycle. It updates the watchlist service naming to match the existing project convention, adds duplicate prevention for watchlist entries, adds a missing test for nonexistent film IDs, documents the default visibility and sort order decisions, and resolves the updated `main` UUID refactor conflict.
+
+For the design decisions, I kept the default watchlist visibility as `public=True` because CineLog is a community film tracking app and public watchlists support discovery and sharing. I also kept the default watchlist sort order alphabetical by film title because the main watchlist endpoint should be predictable and easy to scan when users are looking for a saved film. I acknowledged that recently-added sorting is useful, but I think that belongs better as a future optional sort parameter or activity-style view.
+
+Manual testing steps:
+1. Run `pytest tests/ -v` and confirm all tests pass.
+2. Start the app with `python app.py`.
+3. Send a `POST /watchlist/<user_id>/add` request with a valid `film_id` and confirm a watchlist entry is created.
+4. Send the same request again and confirm the duplicate watchlist entry is rejected instead of creating a second row.
+5. Send a request with a nonexistent UUID-style `film_id` and confirm it raises the expected film-not-found behavior.
+6. Send a `GET /watchlist/<user_id>` request and confirm watchlist films are returned alphabetically with `date_added` and `public` fields included.
+
+Commit history check:
+I ran `git log --oneline upstream/main..HEAD` after rewriting commit history. The branch contains conventional commit messages and no merge commits.

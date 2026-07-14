@@ -20,8 +20,10 @@ I used AI tools to help orient myself in the codebase, understand existing servi
 
 ## Comment 3 – Missing test
 
-**What I did:
-How I verified:**
+**What I did: I created a new `tests/test\_watchlist.py` file and added `test\_add\_to\_watchlist\_nonexistent\_film\_raises`. The test confirms that calling `add\_to\_watchlist()` with a `film\_id` that does not exist raises `FilmNotFoundError`.**
+
+
+**How I verified: I modeled the test after `test\_add\_to\_collection\_nonexistent\_film\_raises` in `tests/test\_collection.py`, using the same fixture style and assertion pattern. I first ran `pytest tests/test\_watchlist.py -v` to confirm the new test passed by itself, then ran `pytest tests/ -v` to confirm the full test suite passed.**
 
 ## Comment 4 – Default visibility
 

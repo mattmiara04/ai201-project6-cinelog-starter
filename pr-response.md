@@ -13,8 +13,10 @@ I used AI tools to help orient myself in the codebase, understand existing servi
 
 ## Comment 2 – Deduplication
 
-**What I did:
-How I verified:**
+**What I did: I added an `AlreadyInWatchlistError` and updated `add\_to\_watchlist()` so it checks for an existing `WatchlistEntry` with the same `user\_id` and `film\_id` before creating a new one. If a duplicate is found, the function raises `AlreadyInWatchlistError` instead of silently creating another row.**
+
+
+**How I verified:I modeled the check after the existing `add\_to\_collection()` logic in `services/collection\_service.py`, which first confirms the film exists, then queries for an existing user/film entry before creating a new one. I ran `pytest tests/ -v` after the change to confirm the existing collection tests still passed.**
 
 ## Comment 3 – Missing test
 
